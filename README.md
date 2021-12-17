@@ -2,7 +2,7 @@
 
 **Overview**
 
-This repository contains the simulation process of the work "Evolution of reproductive strategies in incipient multicellularity" by Yuanxiao, et al.
+This repository contains the simulation of the work "Evolution of reproductive strategies in incipient multicellularity" by Yuanxiao, et al.
 The aim is to investigate the growth rate of multicellular organisms under differnt forms of size effects and cell interactional forms.
 
 **Organization**
