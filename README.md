@@ -13,7 +13,7 @@ The aim is to investigate the growth rate of multicellular organisms under diffe
 
 2. Data.
 
-      This folder stores all the data (growth rates) of organisms under different conditions.
+      This folder stores all the data (growth rates) of organisms under different conditions. Since the data are too large, here we show the compressed data rather than the original data.
 
 3. Figure.
 
