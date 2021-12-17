@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Oct 27 09:58:57 2020
+
+@author: gao
+"""
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import colors
+from mpl_toolkits.axes_grid1 import AxesGrid
+import matplotlib as mpl
+import os
+from matplotlib.colors import LinearSegmentedColormap
+import pickle
+import seaborn as sns
+import pandas as pd
+import ptitprince as pt
+
+#----read lc list--------------------------------------------------
+with open("../simulation/LC.txt", "r") as file:
+    lcs = eval(file.readline())                          # read lc list
+
+##============================================
+"""Due to the long time for abstract the data for 3+1, so we run only one times and then save the data local.
+The following gray code are used for the data abstracting for 3+1 or any other data."""
+##----10000 line data -------------
+#with open('%s/size_tsn_line10000_v0.txt'%data_pathway, 'rb') as fp:
+#	t_data0 = pickle.load(fp)
+#	
+#test_number=10000                       # test the results under 1000 lines
+#t_data=t_data0[0:test_number]	
+#
+#binary_lc=np.array([1,3,6,7,12,13,20,22,23,34,36,37,52,56,57,58])-1
+#
+##-------------------------------------------------------------------------------
+#
+##---read data-----------------------
+#'''proved that all optimal lc are binary splitting lcs '''
+#"collect the line and its corresponding optimal lcs"
+#
+#end_lc=58                        # 13[5], 23[6], 37[7]; 58[8]; 87[9]; 128[10]     # how many lcs we care
+#
+#line_opLCs=[]                    # collect the lines and its optimal lcs
+#
+#for T_cluster in range(0,test_number):                       # how many figures or cell divisions
+#	all_list=[]
+#	for i_th in range(0,end_lc):                            # read all lcs data = growth rate
+#		
+#		with open('./data/data_general_size_effect/%d_%d.txt'%(T_cluster,i_th), "r") as file:
+#			nan=float(np.nan)
+#			inf=np.inf
+#			grate = eval(file.readline())                  # read growth rate
+#		all_list.append(np.array([i_th, grate]))
+#            
+#	all_list_f = np.array(all_list, dtype=np.float128)
+#	max_value=np.amax(all_list_f[:,1])
+#	lc_ith=int(all_list_f[np.where(all_list_f[:,1]==max_value)][0][0])
+#	"check if all optimal lcs are the binary splitting lcs"
+##	if lc_ith not in binary_lc:                       
+##		print('Wrong!!!! \n')
+##		print('The line is %s'%T_cluster)
+#	"save the line and optimal lcs"	
+#	line_opLCs.append(np.array([T_cluster,lc_ith]))
+#		
+#line_opLCs=np.array(line_opLCs)		         # each line-id and its optimal lc
+#oplc_list=set(line_opLCs[:,1])	
+#
+##--------np.array_t-data-------------------------------------------------
+###%%
+#neutral_list=np.array([np.log((i+1)/(i)) for i in range(1,8)])       #neutral cases
+#
+#t_data_arr=np.array([np.array(i) for i in t_data])                  # 10000,7
+#t_data_bac=t_data_arr*neutral_list                                   # sample dots
+#
+## sample to panda.data---
+#
+#
+#
+#df_list=[]
+#
+#for i in range(7):
+#	data_sample={}
+#	df=pd.DataFrame(data_sample)
+#	
+#	posi=[str(i+1) for j in range(test_number)]
+#	dots=t_data_bac[:,i]
+#	chi_ratio=t_data_arr[:,i]
+#	
+#	df['posi']=posi
+#	df['dots']=dots
+#	df['chi_ratio']=chi_ratio
+#	df_list.append(df)
+#	
+#frames=[df_list[0],df_list[1],df_list[2],df_list[3],df_list[4], df_list[5],df_list[6]]	
+#sample=pd.concat(frames)
+#
+#line_prop=[str('Sample') for i in range(7*test_number)]
+#sample['Lines']=line_prop
+#
+###------target lc--========-------------
+#blc=5
+#target_lc=line_opLCs[np.where(line_opLCs[:,1]==blc)]
+#target_lines=[]
+#target_lines_ratio=[]
+#for i in target_lc[:,0]:
+#	target_lines.append(t_data_bac[i])                              # original t_sn data
+#	target_lines_ratio.append(t_data_arr[i])                              # ratio t_sn data
+#target_lines=np.array(target_lines)                                    # target dots
+#target_lines_ratio=np.array(target_lines_ratio)                      # ratio t_sn data
+#
+## target to panda.data---
+#df_list0=[]
+#
+#for i in range(7):
+#	data_sample={}
+#	df=pd.DataFrame(data_sample)
+#	
+#	posi=[str(i+1) for j in range(np.shape(target_lines)[0])]
+#	dots=target_lines[:,i]
+#	chi_ratio=target_lines_ratio[:,i]
+#	
+#	df['posi']=posi
+#	df['dots']=dots
+#	df['chi_ratio']=chi_ratio
+#	df_list0.append(df)
+#	
+#frames0=[df_list0[0],df_list0[1],df_list0[2],df_list0[3],df_list0[4], df_list0[5],df_list0[6]]	
+#target=pd.concat(frames0)
+#
+#line_prop0=[str('Promoted') for i in range(7*(np.shape(target_lines)[0]))]
+#target['Lines']=line_prop0
+#
+##======who data-===============
+#combined_data=pd.concat([sample,target])
+#
+#sample.to_pickle('sample_data.pkl')	                           
+#combined_data.to_pickle('origin_combined_data.pkl')            # dave data
+#target.to_pickle('origin_target_13.pkl')                       # blue dots
+
+##============================================
+"""These are data that we saved which can be generated by runing the above codes."""
+
+blc=5
+sample_data=pd.read_pickle('/Users/gao/Desktop/life-cycles-with-multiplayer-game/SimulationCode/v6/v2_VD_V0/v12_sizeti/code_general_size_effect/test_lines10000/sample_data.pkl')      # read data
+combined_data=pd.read_pickle('origin_combined_data.pkl')      # read data
+target=pd.read_pickle('/Users/gao/Desktop/life-cycles-with-multiplayer-game/SimulationCode/v6/v2_VD_V0/v12_sizeti/code_general_size_effect/test_lines10000/origin_target_13.pkl')
+
+#-----------------draw figures--------------------------
+#------raincloud plot----------
+
+f,ax = plt.subplots( figsize=(12, 4))
+
+df0=sample_data
+df=target
+dy="chi_ratio"; dx="posi"; ort="v"; pal={""}
+pal = sns.color_palette(n_colors=1)
+pal0 = sns.color_palette(n_colors=2)
+
+dodge_value=1
+jitter_value=0.12
+
+ax=sns.stripplot( x = dx, y = dy, data = df0, 
+		palette={ "darkgrey"},dodge=dodge_value,
+     edgecolor = "darkgrey",size = 1, jitter = jitter_value, zorder = 0, 
+     orient = ort,alpha=0.5)
+
+#-- blue color
+ax=pt.half_violinplot( x = dx, y = dy, data = df, 
+					  palette = { "#377eb8"},
+				  		linewidth=0.5,dodge=dodge_value,
+      bw = .2, cut = 0.,scale = "area", width = 1., inner = None, 
+      orient = ort,alpha=0.8)
+
+ax=sns.stripplot( x = dx, y = dy, data = df, palette = { "#377eb8"},
+				linewidth=0.5,dodge=dodge_value,										
+     edgecolor = "#377eb8",size = 2, jitter = jitter_value, zorder = 0, 
+     orient = ort,alpha=0.8)
+		
+ax.set_xlabel(r"Organism size $n$",fontsize=16)
+ax.set_ylabel("Normalised cell increment" "\n" r"component $\chi_{n}$",fontsize=16)
+
+#------remove ticks and top and right frames
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+
+#------remove ticks and top and right frames
+ax.spines['right'].set_visible(False)
+ax.spines['top'].set_visible(False)
+ax.spines['left'].set_visible(False)
+ax.yaxis.set_ticks_position('none') 
+
+plt.xlim(-.7,6.3)
+
+#---artifical legend--------------
+import matplotlib.patches as mpatches
+legend_dict = { 'Sample' : 'silver', r'Promoting $3+1$' : '#377eb8' }
+
+patchList = []
+for key in legend_dict:
+        data_key = mpatches.Patch(color=legend_dict[key], label=key)
+        patchList.append(data_key)
+ax.legend(handles=patchList,frameon=False,loc='upper center', bbox_to_anchor=(0.45, 1.13),
+		shadow=None, ncol=1)
+
+plt.ylim(0.35,1.6)        
+
+plt.show()
+			
+#f.savefig('./figure/figure_2C.pdf' % ,bbox_inches='tight' )   # save figures
