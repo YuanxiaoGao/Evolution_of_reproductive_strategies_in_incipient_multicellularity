@@ -1,0 +1,2 @@
+# Evolution_of_reproductive_strategies_in_incipient_multicellularity
+Simulation process of the work "Evolution of reproductive strategies in incipient multicellularity"
