@@ -2,8 +2,8 @@
 
 **Overview**
 
-This repository contains the simulation of the work "Evolution of reproductive strategies in incipient multicellularity" by Yuanxiao, et al.
-The aim is to investigate the growth rate of multicellular organisms under differnt forms of size effects and cell interactional forms.
+This repository contains the simulation of "Evolution of reproductive strategies in incipient multicellularity" by Yuanxiao et al.
+The aim is to investigate the growth rate of multicellular organisms under different forms of size effects and cell interactional forms.
 
 **Organization**
 
@@ -17,13 +17,13 @@ The aim is to investigate the growth rate of multicellular organisms under diffe
 
 3. Figure.
 
-      This folder contains the python scripts that read the data in foler data and generate corresponding figures.
+      This folder contains the python scripts that read the relevant data strored in the folder data and generate corresponding figures.
 
 **Usage**
 
 Growth_rate_*.py contains the source code for calculating growth rate.
 
-make_*.py are the values of parameters. The file generates a run.sh file, which will be executed on cluster.
+make_*.py are the values of parameters. The file generates a run.sh file, which is executed on cluster.
 
 **Requirement**
 
